@@ -1,10 +1,25 @@
 <h1> Emails </h1>
-
-<% @emails.each do |email| %>
-  <div class="email-entry">
-    <strong>Sender:</strong> <%= email.sender %><br>
-    <strong>Subject:</strong> <%= email.subject %><br>
-    <strong>Date:</strong> <%= email.email_date.strftime('%Y-%m-%d') if email.email_date %><br>
-    <hr>
-  </div>
+<%= search_form_for @q do |f| %>
+  <%= f.label :sender_cont %>
+  <%= f.search_field :sender_cont %>
+  <%= f.label :email_date_eq %>
+  <%= f.date_field :email_date_eq %>
+  <%= f.label :email_date_gteq %>
+  <%= f.date_field :email_date_gteq %>
+  <%= f.label :email_date_lteq %>
+  <%= f.date_field :email_date_lteq %>
+  <%= f.submit %>
+<% end %>
+<% if @emails.any? %>
+  <% @emails.each do |email| %>
+    <div class="email-entry">
+      <strong>Sender:</strong> <%= email.sender %><br>
+      <strong>Subject:</strong> <%= email.subject %><br>
+      <strong>Date:</strong> <%= email.email_date.strftime('%Y-%m-%d %H:%M:%S') if email.email_date %><br>
+      <hr>
+    </div>
+  <% end %>
+  <h2> count : <%= @emails.size %> </h2>
+<% else %>
+  <p>No emails found.</p>
 <% end %>
