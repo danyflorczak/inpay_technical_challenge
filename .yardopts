@@ -1,0 +1,6 @@
+--plugin relative_markdown_links
+--markup markdown
+--readme README.md
+app/**/*.rb
+-
+docs/**/README.md

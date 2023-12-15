@@ -1,0 +1,14 @@
+require: rubocop-rspec
+
+RSpec/ExampleLength:
+  Enabled: true
+  Max: 10
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+
+RSpec/ExampleWithoutDescription:
+  Enabled: true
+  EnforcedStyle: single_line_only
+
