@@ -1,5 +1,6 @@
 require "google/apis/gmail_v1"
 require "google/api_client/client_secrets"
+require "date"
 
 class GmailService
   def initialize(user)
@@ -18,9 +19,12 @@ class GmailService
 
       sender = last_message.payload.headers.find { |header| header.name == "From" }&.value
       subject = last_message.payload.headers.find { |header| header.name == "Subject" }&.value
-      date = last_message.payload.headers.find { |header| header.name == "Date" }&.value
+      date_header = last_message.payload.headers.find { |header| header.name == "Date" }&.value
+      date = DateTime.parse(date_header)
 
-      {sender: sender, subject: subject, date: date}
+      email = user.emails.create(sender: sender, subject: subject, email_date: date.to_date, email_datetime: date)
+
+      email.persisted? ? email : {error: "Failed to save email"}
     else
       {error: "No messages found"}
     end
