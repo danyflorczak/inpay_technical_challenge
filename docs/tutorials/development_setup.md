@@ -66,3 +66,4 @@ This repository depends on Google Api, in order to make it work you have to foll
 9. In the "Application Type" field, select "Web Application", in the "Name" field, type your app name, in the "Authorized redirection URI indeterminators" section, click the "Add URI" button and enter the address "http://localhost:3000/users/auth/google_oauth2/callback" there, confirm by clicking the "Create" button.
 10. You will see a popup with a confirmation that "OAuth client has been created" and with login data. You will need them in the project configuration so save them, you can use the "Download JSON" option.
 11. In the config/configuration.yml fill in your credentials : google client id and google client secret. For the format checkout config/confiugration.yml.example
+12. Go to the side panel "Enabled APIs & services" => "+ Enable APIS and services" select Gmail Api and select "Enable"
