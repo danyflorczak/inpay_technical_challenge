@@ -1,0 +1,12 @@
+<h2>Count Emails</h2>
+<%= search_form_for @q, url: count_emails_path do |f| %>
+  <%= f.label :email_date_eq, 'Date' %>
+  <%= f.date_field :email_date_eq %>
+  <%= f.label :sender_cont, 'Sender (optional)' %>
+  <%= f.search_field :sender_cont %>
+  <%= f.submit 'Search' %>
+<% end %>
+<% if !@emails_count.nil? %>
+  <p>Emails count: <%= @emails_count %></p>
+<% end %>
+<%= link_to 'Dashboard', emails_path %>

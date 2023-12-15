@@ -1,0 +1,14 @@
+<h2>List Subjects</h2>
+<%= search_form_for @q, url: subjects_emails_path do |f| %>
+  <%= f.label :email_date_eq, 'Date' %>
+  <%= f.date_field :email_date_eq %>
+  <%= f.submit 'Search' %>
+<% end %>
+<% unless @subjects.empty? %>
+  <ul>
+    <% @subjects.each do |subject| %>
+      <li><%= subject %></li>
+    <% end %>
+  </ul>
+<% end %>
+<%= link_to 'Dashboard', emails_path %>
