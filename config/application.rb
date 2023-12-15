@@ -5,8 +5,7 @@ require "rails/all"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-
-module TechnicalChallenge
+module InpayChallenge
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
@@ -23,5 +22,8 @@ module TechnicalChallenge
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    A9n.root = File.expand_path("..", __dir__)
+    A9n.load
   end
 end
