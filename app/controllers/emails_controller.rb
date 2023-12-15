@@ -2,6 +2,7 @@ class EmailsController < ApplicationController
   before_action :authenticate_user!
   def index
     @user = current_user
-    @emails = @user.emails
+    @q = @user.emails.ransack(params[:q])
+    @emails = @q.result(distinct: true)
   end
 end
