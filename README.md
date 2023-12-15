@@ -9,5 +9,3 @@
 * [Topic guides](docs/topics/README.md) discuss key topics and concepts at a fairly high level and provide useful background information and explanation.
 * [Reference guides](docs/references/README.md) contain technical reference for APIs, project glossary and other aspects of app machinery.
 * [How-to guides](docs/guides/README.md) are recipes. They guide you through the steps involved in addressing key problems and use-cases.
-
-To browse the documentation run `./bin/yard server` and open it in a [browser](https://localhost:8808).
