@@ -1,10 +1,4 @@
-<h1> Emails </h1>
-
-<% @emails.each do |email| %>
-  <div class="email-entry">
-    <strong>Sender:</strong> <%= email.sender %><br>
-    <strong>Subject:</strong> <%= email.subject %><br>
-    <strong>Date:</strong> <%= email.email_date.strftime('%Y-%m-%d') if email.email_date %><br>
-    <hr>
-  </div>
-<% end %>
+<h1>Emails Dashboard</h1>
+<%= link_to 'Count Emails', count_emails_path %>
+<%= link_to 'List Subjects', subjects_emails_path %>
+<%= link_to 'Email Stats', stats_emails_path %>
