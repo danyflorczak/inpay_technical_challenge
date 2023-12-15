@@ -7,27 +7,35 @@ class GmailService
     @user = user
   end
 
-  def retrieve_last_email_info
+  def retrieve_all_email_info
     user_email = user.email
     label_id = "INBOX"
-    max_results = 1
-    messages = google_gmail_client.list_user_messages(user_email, label_ids: [label_id], max_results: max_results)
+    max_results = 500
+    page_token = nil
 
-    if messages&.messages&.any?
-      last_message_id = messages.messages.first.id
-      last_message = google_gmail_client.get_user_message(user_email, last_message_id)
+    loop do
+      response = google_gmail_client.list_user_messages(user_email, label_ids: [label_id], max_results: max_results, page_token: page_token)
+      break unless response.messages&.any?
 
-      sender = last_message.payload.headers.find { |header| header.name == "From" }&.value
-      subject = last_message.payload.headers.find { |header| header.name == "Subject" }&.value
-      date_header = last_message.payload.headers.find { |header| header.name == "Date" }&.value
-      date = DateTime.parse(date_header)
+      response.messages.each do |message|
+        message_info = google_gmail_client.get_user_message(user_email, message.id)
 
-      email = user.emails.create(sender: sender, subject: subject, email_date: date.to_date, email_datetime: date)
+        sender = message_info.payload.headers.find { |header| header.name == "From" }&.value
+        subject = message_info.payload.headers.find { |header| header.name == "Subject" }&.value
+        date_str = message_info.payload.headers.find { |header| header.name == "Date" }&.value
+        parsed_date = DateTime.parse(date_str)
 
-      email.persisted? ? email : {error: "Failed to save email"}
-    else
-      {error: "No messages found"}
+        Email.create!(sender: sender, subject: subject, email_date: parsed_date.to_date, email_datetime: parsed_date, user_id: user.id)
+      end
+
+      page_token = response.next_page_token
+      break unless page_token
     end
+
+    {success: "Successfully saved all mail records"}
+  rescue => e
+    Rails.logger.error "Error retrieving emails: #{e.message}"
+    {error: "Failed to retrieve emails"}
   end
 
   private
