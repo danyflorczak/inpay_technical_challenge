@@ -7,4 +7,11 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", :as => :rails_health_check
 
   root "emails#index"
+  resources :emails, only: [:index] do
+    collection do
+      get :count
+      get :subjects
+      get :stats
+    end
+  end
 end
