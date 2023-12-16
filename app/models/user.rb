@@ -8,7 +8,6 @@ class User < ApplicationRecord
       user.provider = access_token.provider
       user.uid = access_token.uid
       user.email = access_token.info.email
-      user.password = Devise.friendly_token[0, 20]
       user.token = access_token.credentials.token
       user.refresh_token = access_token.credentials.refresh_token
       user.save!
