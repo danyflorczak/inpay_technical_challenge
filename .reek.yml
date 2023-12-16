@@ -1,0 +1,50 @@
+---
+# https://github.com/troessner/reek#configuration-file
+detectors:
+  IrresponsibleModule:
+    enabled: false
+  FeatureEnvy:
+    enabled: true
+  UtilityFunction:
+    enabled: true
+  MissingSafeMethod:
+    enabled: true
+    exclude:
+      - GmailAdapter#refresh_token!
+  NilCheck:
+    enabled: false
+  TooManyStatements:
+    enabled: true
+    exclude:
+      - initialize
+      - User#self.from_omniauth
+    max_statements: 9
+  UncommunicativeParameterName:
+    enabled: true
+    reject:
+      - /^.$/
+      - "/[0-9]$/"
+      - "/[A-Z]/"
+      - /^_/
+  UncommunicativeVariableName:
+    accept:
+      - /^_$/
+      - e
+    enabled: true
+    reject:
+      - /^.$/
+      - "/[0-9]$/"
+      - "/[A-Z]/"
+  DuplicateMethodCall:
+    enabled: true
+    exclude:
+      - SessionsController#refresh_token
+  UnusedParameters:
+    enabled: true
+    exclude:
+      - Email#self.ransackable_associations
+
+exclude_paths:
+  - vendor/bundle
+  - db/migrate
+  - app/controllers/users/omniauth_callbacks_controller.rb

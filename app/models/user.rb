@@ -1,10 +1,6 @@
 class User < ApplicationRecord
   has_many :emails, dependent: :destroy
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :validatable,
-    :omniauthable, omniauth_providers: [:google_oauth2]
+  devise :omniauthable, omniauth_providers: [:google_oauth2]
 
   def self.from_omniauth(access_token)
     find_or_create_by(provider: access_token.provider, email:
@@ -12,7 +8,6 @@ class User < ApplicationRecord
       user.provider = access_token.provider
       user.uid = access_token.uid
       user.email = access_token.info.email
-      user.password = Devise.friendly_token[0, 20]
       user.token = access_token.credentials.token
       user.refresh_token = access_token.credentials.refresh_token
       user.save!

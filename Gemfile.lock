@@ -88,6 +88,9 @@ GEM
       msgpack (~> 1.2)
     brakeman (6.1.0)
     builder (3.2.4)
+    bullet (7.1.4)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     bundler-audit (0.9.1)
       bundler (>= 1.2.0, < 3)
       thor (~> 1.0)
@@ -117,6 +120,8 @@ GEM
     factory_bot_rails (6.4.2)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
+    faker (3.2.2)
+      i18n (>= 1.8.11, < 2)
     faraday (2.7.12)
       base64
       faraday-net_http (>= 2.0, < 3.1)
@@ -179,6 +184,7 @@ GEM
       rexml
     kramdown-parser-gfm (1.1.0)
       kramdown (~> 2.0)
+    kwalify (0.7.2)
     language_server-protocol (3.17.0.3)
     lefthook (1.5.5)
     lint_roller (1.1.0)
@@ -301,6 +307,10 @@ GEM
       redis-client (>= 0.17.0)
     redis-client (0.19.0)
       connection_pool
+    reek (6.1.4)
+      kwalify (~> 0.7.0)
+      parser (~> 3.2.0)
+      rainbow (>= 2.0, < 4.0)
     regexp_parser (2.8.3)
     reline (0.4.1)
       io-console (~> 0.5)
@@ -438,6 +448,7 @@ GEM
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
     unicode-display_width (2.5.0)
+    uniform_notifier (1.16.0)
     version_gem (1.1.3)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -459,10 +470,12 @@ DEPENDENCIES
   a9n
   bootsnap
   brakeman (~> 6.1)
+  bullet (~> 7.0)
   bundler-audit (~> 0.9)
   debug
   devise (~> 4.9, >= 4.9.3)
   factory_bot_rails (~> 6.4)
+  faker (~> 3.2)
   google-api-client
   importmap-rails
   jbuilder
@@ -474,6 +487,7 @@ DEPENDENCIES
   rails (~> 7.1.2)
   ransack
   redis (>= 4.0.1)
+  reek (~> 6.1)
   rspec-rails (~> 6.1)
   rubocop-rails (~> 2.22)
   rubocop-rspec (~> 2.25)

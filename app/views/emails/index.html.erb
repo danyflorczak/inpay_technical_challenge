@@ -2,3 +2,7 @@
 <%= link_to 'Count Emails', count_emails_path %>
 <%= link_to 'List Subjects', subjects_emails_path %>
 <%= link_to 'Email Stats', stats_emails_path %>
+
+<% if user_signed_in? %>
+  <%= link_to 'Logout', destroy_user_session_path %>
+<% end %>

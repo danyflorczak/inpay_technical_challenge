@@ -76,8 +76,11 @@ end
 
 group :development, :test do
   gem "brakeman", "~> 6.1", require: false
+  gem "bullet", "~> 7.0"
   gem "bundler-audit", "~> 0.9", require: false
   gem "factory_bot_rails", "~> 6.4"
+  gem "faker", "~> 3.2"
+  gem "reek", "~> 6.1", require: false
   gem "standard", "~> 1.32", require: false
   gem "rspec-rails", "~> 6.1"
   gem "rubocop-rails", "~> 2.22", require: false
