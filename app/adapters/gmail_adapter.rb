@@ -53,26 +53,18 @@ class GmailAdapter
     rescue Google::Apis::AuthorizationError => e
       handle_authorization_error(e)
     rescue Google::Apis::RateLimitError => e
-      if (retry_counter += 1) < retries
-        handle_rate_limit_error(e, retry_counter)
-        retry
-      else
-        raise Error, "Rate limit exceeded. No more retries left."
-      end
+      handle_rate_limit_error(e, retry_counter)
+      retry if (retry_counter += 1) < retries
     rescue Google::Apis::Error => e
       raise Error, e.message
     end
   end
 
   def handle_authorization_error(error)
-    Rails.logger.error("Authorization error: #{error.message}")
-    begin
-      refresh_token!
-      retry
-    rescue => e
-      Rails.logger.error("Token refresh failed: #{e.message}")
-      raise AuthorizationError, "Token expired or invalid. Please log in again."
-    end
+    refresh_token!
+  rescue => e
+    Rails.logger.error("Authorization error: #{error.message}. Token refresh failed: #{e.message}")
+    raise AuthorizationError, "Token expired or invalid. Please log in again."
   end
 
   def refresh_token!
@@ -81,9 +73,10 @@ class GmailAdapter
   end
 
   def update_user_credentials
+    authorization = client.authorization
     user.update(
-      token: client.authorization.access_token,
-      refresh_token: client.authorization.refresh_token
+      token: authorization.access_token,
+      refresh_token: authorization.refresh_token
     )
   end
 
