@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       get :count
       get :subjects
       get :stats
+      get :sync_emails
+      get :dashboard
     end
   end
   devise_for :users, controllers: {omniauth_callbacks: "users/omniauth_callbacks"}

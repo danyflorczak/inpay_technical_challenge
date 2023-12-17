@@ -44,3 +44,10 @@ An ActiveRecord model representing the email records in the database. It include
 
 ## User Model
 Another ActiveRecord model that represents users of the application. It handles user authentication with Devise and OmniAuth for Google OAuth2, manages user sessions, and stores tokens and user identifiers. It also has a relationship with the Email model, indicating that users have many emails.
+
+## EmailSyncJob
+This is a background Job that runs EmailRetrievalService and EmailProcessingService as a background job and when it is finish it sends message to ActionCable to let know when the job is done.
+
+## EmailSyncChannel
+
+The EmailSyncChannel class is an Action Cable channel in a Rails application, designed to handle real-time WebSocket connections related to email synchronization for individual users. It's purpose is to wait for the message from EmailSyncJob when it's done downloading emails and redirect user to emails dashboard

@@ -9,6 +9,7 @@ This repository depends on Google Api, in order to make it work you have to foll
 
 - [asdf](https://asdf-vm.com/)
 - [Homebrew](https://brew.sh/)
+- [Redis](https://redis.io/)
 
 ### Steps
 
@@ -41,11 +42,24 @@ This repository depends on Google Api, in order to make it work you have to foll
    brew services start postgresql
    ```
 
-5. Create db
+5. Run bundle install
+   ```sh
+   bundle install
+   ```
+6. Create db
    ```sh
    rails db:create
    rails db:migrate
    ```
+7. Run the server
+   ```sh
+   rails server
+   ```
+8. Run background jobs
+   ```sh
+   sidekiq
+   ```
+
 
 ## Google Cloud Setup
 

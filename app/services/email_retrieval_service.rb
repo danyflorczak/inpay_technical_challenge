@@ -12,7 +12,10 @@ class EmailRetrievalService
   end
 
   def fetch_last_email
-    process_last_message("INBOX")
+    emails = []
+    last_message = process_last_message("INBOX")
+    emails << last_message if last_message
+    emails
   end
 
   private
