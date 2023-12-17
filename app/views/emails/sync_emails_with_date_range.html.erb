@@ -1,0 +1,13 @@
+<h1>Sync Emails within Date Range</h1>
+
+<%= form_with url: perform_sync_with_date_range_emails_path, method: :post do |form| %>
+  <div>
+    <%= form.label :start_date, 'Start Date:' %>
+    <%= form.date_field :start_date %>
+  </div>
+  <div>
+    <%= form.label :end_date, 'End Date:' %>
+    <%= form.date_field :end_date %>
+  </div>
+  <%= form.submit 'Sync Emails' %>
+<% end %>

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       get :stats
       get :sync_emails
       get :dashboard
+      get :sync_emails_with_date_range
+      post :perform_sync_with_date_range
     end
   end
   devise_for :users, controllers: {omniauth_callbacks: "users/omniauth_callbacks"}
