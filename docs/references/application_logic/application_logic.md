@@ -6,7 +6,7 @@ Data flow refers to the movement of data within an information system, applicati
 
 ![data_flow.drawio.png](data_flow.drawio.png)
 
-### Class Descriptions
+# Class Descriptions
 
 ## GmailAdapter
 This class serves as a bridge between your application and the Gmail API. It initializes with a user's credentials and contains methods to list messages and fetch individual emails. It handles API calls and encapsulates error handling for authorization issues, rate limits, and general errors.
@@ -42,5 +42,5 @@ A Rails controller that handles HTTP requests related to emails. It uses various
 ## Email Model
 An ActiveRecord model representing the email records in the database. It includes associations to the User model and specifies which attributes are searchable with Ransack (a gem for creating search queries).
 
-## User
+## User Model
 Another ActiveRecord model that represents users of the application. It handles user authentication with Devise and OmniAuth for Google OAuth2, manages user sessions, and stores tokens and user identifiers. It also has a relationship with the Email model, indicating that users have many emails.
