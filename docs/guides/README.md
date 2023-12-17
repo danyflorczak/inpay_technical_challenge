@@ -14,4 +14,3 @@ If they’re well-written and address the right subjects, you’re likely to fin
 [Read more](https://diataxis.fr/how-to-guides/)
 
 * [How-to use asdf](asdf.md)
-* [How-to record Architecture Decision](adr.md)
