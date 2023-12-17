@@ -1,5 +1,7 @@
 <h2>Email Statistics</h2>
-<% if @most_frequent_sender %>
+<% if @most_frequent_sender.present? %>
   <p>Most frequent sender: <%= @most_frequent_sender.first %> (Count: <%= @most_frequent_sender.last %>)</p>
+<% else %>
+  <p>No emails were found.</p>
 <% end %>
 <%= link_to 'Dashboard', dashboard_emails_path %>
