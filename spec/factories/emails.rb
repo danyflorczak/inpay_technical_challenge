@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :email do
-    sender { "MyString" }
-    subject { "MyString" }
-    email_date { "2023-12-15" }
-    email_datetime { "2023-12-15 17:30:05" }
-    user { nil }
+    sender { Faker::Internet.email }
+    subject { Faker::Lorem.sentence }
+    email_date { Faker::Date.backward(days: 14) }
+    email_datetime { Faker::Time.backward(days: 14, format: :default) }
+    user
   end
 end
