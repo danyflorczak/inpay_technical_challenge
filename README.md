@@ -21,7 +21,7 @@
 - Upon opening the application at `localhost:3000`, you will be prompted to log in using Google. Note that this application exclusively supports Google authentication.
 - After logging in, you will land on the email index page.
 ## Navigating the Index Page
-On the index page, you will find three main options:
+On the index page, you will find four options:
 
 - Sync All Emails: Downloads all emails from your Gmail inbox. This process might take approximately 7-10 minutes, depending on the volume of emails.
 - Sync Emails by Date Range: Allows you to download emails from a specified start date to an end date. You will need to enter these dates in the provided form. The dates are treated as exclusive.
