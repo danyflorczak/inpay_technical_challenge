@@ -12,5 +12,5 @@ Your users need reference material because they need truth and certainty - firm 
 [Read more](https://diataxis.fr/reference/)
 
 ## The application logic
-[Here](application_logic) PLACEHOLDER
+[Here](application_logic/application_logic.md) you can find the application logic description
 
