@@ -5,8 +5,8 @@
 <%= link_to 'Email Stats', stats_emails_path %>
 <div>
   <% if user_signed_in? %>
-    <%= link_to 'Logout', destroy_user_session_path %>
+    <div><%= link_to 'Logout', destroy_user_session_path %></div>
   <% end %>
 </div>
 
-<%= link_to "Back to Downloads", emails_path %>
+<div><%= link_to "Back to Downloads", emails_path %></div>

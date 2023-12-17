@@ -4,7 +4,10 @@
   <%= f.date_field :email_date_eq %>
   <%= f.submit 'Search' %>
 <% end %>
-<% unless @subjects.empty? %>
+
+<% if @subjects.empty? %>
+  <p>No emails were found.</p>
+<% else %>
   <ul>
     <% @subjects.each do |subject| %>
       <li><%= subject %></li>

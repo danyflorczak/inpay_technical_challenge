@@ -15,3 +15,5 @@ RSpec/SubjectStub:
   Enabled: false
 RSpec/VerifiedDoubles:
   Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
