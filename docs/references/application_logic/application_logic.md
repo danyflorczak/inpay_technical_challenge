@@ -10,7 +10,7 @@ Data flow refers to the movement of data within an information system, applicati
 
 ## GmailAdapter
 This class serves as a bridge between your application and the Gmail API. It initializes with a user's credentials and contains methods to list messages and fetch individual emails. It handles API calls and encapsulates error handling for authorization issues, rate limits, and general errors.
-# Methods
+### Methods
 - `list_user_messages` - Public method that lists the messages in a user's Gmail account. It accepts parameters for label ID, maximum results to return, and a page token for pagination.
 - `get_user_message` - Public method that retrieves a specific message from the user's Gmail account by message ID. 
 - `setup_gmail_client` - Private method that creates a new instance of the Google::Apis::GmailV1::GmailService and configures it with the user's credentials.
@@ -23,7 +23,7 @@ This class serves as a bridge between your application and the Gmail API. It ini
 
 ## EmailProcessingService
 This service class processes raw email data retrieved from the Gmail API. It builds and saves email records to the database within a transaction, ensuring that all records are saved or none if an error occurs.
-# Methods
+### Methods
 - `process_and_save_emails` - Public method that processes a list of email data fetched from the Gmail API and saves them as email records in the database. It ensures that all emails are saved within a database transaction, providing atomicity. If an error occurs during the save operation, it logs the error and returns a failure message.
 - `build_email_record` - Private method that constructs a hash representing an email record from the raw Gmail message data. It extracts necessary fields such as the sender, subject, and date from the email headers.
 - `save_email_records` - Private method that performs a bulk insert of email records into the database using the insert_all method provided by ActiveRecord.
@@ -32,7 +32,7 @@ This service class processes raw email data retrieved from the Gmail API. It bui
 
 ## EmailRetrievalService
 This service class interacts with the GmailAdapter to fetch all emails or the last email from the Gmail API. It contains methods to process messages in batches and handle pagination with the Gmail API.
-# Methods
+### Methods
 - `fetch_all_emails` - Public method that retrieves all email messages from the user's Gmail inbox. It accumulates the emails into an array by repeatedly calling process_messages until all messages have been fetched.
 - `process_messages` - Private method that handles the retrieval of email messages in batches. It uses the GmailAdapter to list messages and then individually fetches each message's details. It continues fetching messages in a loop, using a page token for pagination until no more messages are available.
 
