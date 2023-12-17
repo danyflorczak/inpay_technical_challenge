@@ -11,4 +11,7 @@ RSpec/ExampleLength:
 RSpec/ExampleWithoutDescription:
   Enabled: true
   EnforcedStyle: single_line_only
-
+RSpec/SubjectStub:
+  Enabled: false
+RSpec/VerifiedDoubles:
+  Enabled: false
