@@ -25,5 +25,6 @@ module InpayChallenge
 
     A9n.root = File.expand_path("..", __dir__)
     A9n.load
+    config.active_job.queue_adapter = :sidekiq
   end
 end
