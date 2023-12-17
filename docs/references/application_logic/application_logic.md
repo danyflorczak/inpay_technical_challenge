@@ -2,7 +2,7 @@
 The application is a web service that interfaces with Gmail to retrieve, process, and analyze a user's email data. It allows users to log in via OAuth2, search and retrieve emails from their Gmail account and store these emails in a database. The web service provides functionality to query the database for statistics and other email-related information, such as the number of emails received on a certain date, a list of email subjects from a particular date, and the most frequent email sender.
 
 ## Data flow
-Data flow refers to the movement of data within an information system, application, or between systems. It encompasses the path that data takes from its creation to its final destination.
+Data flow refers to the movement of data within an information system this chart is from the designing phase of development.
 
 ![data_flow.drawio.png](data_flow.drawio.png)
 
@@ -26,7 +26,7 @@ This service class processes raw email data retrieved from the Gmail API. It bui
 ### Methods
 - `process_and_save_emails` - Public method that processes a list of email data fetched from the Gmail API and saves them as email records in the database. It ensures that all emails are saved within a database transaction, providing atomicity. If an error occurs during the save operation, it logs the error and returns a failure message.
 - `build_email_record` - Private method that constructs a hash representing an email record from the raw Gmail message data. It extracts necessary fields such as the sender, subject, and date from the email headers.
-- `save_email_records` - Private method that performs a bulk insert of email records into the database using the insert_all method provided by ActiveRecord.
+- `save_email_records` - Private method that performs a bulk insert of email records that are don't overlaps with email record that already exsists into the database using the insert_all method.
 - `find_header_value` - Private helper method that searches through an array of email headers and returns the value for a specific header name.
 - `parse_date` - Private helper method that parses a date string into a DateTime object.
 
@@ -34,6 +34,7 @@ This service class processes raw email data retrieved from the Gmail API. It bui
 This service class interacts with the GmailAdapter to fetch all emails or the last email from the Gmail API. It contains methods to process messages in batches and handle pagination with the Gmail API.
 ### Methods
 - `fetch_all_emails` - Public method that retrieves all email messages from the user's Gmail inbox. It accumulates the emails into an array by repeatedly calling process_messages until all messages have been fetched.
+- `fetch_emails_in_date_range` - Public method that retrieves all emails from a specific date range from the user's Gmail inbox.
 - `process_messages` - Private method that handles the retrieval of email messages in batches. It uses the GmailAdapter to list messages and then individually fetches each message's details. It continues fetching messages in a loop, using a page token for pagination until no more messages are available.
 
 ## EmailsController
