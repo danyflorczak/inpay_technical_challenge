@@ -10,8 +10,10 @@ RSpec.describe EmailProcessingService do
   end
 
   describe "#process_and_save_emails" do
+    let(:sample_email_id) { "123" }
     let(:sample_email) do
       OpenStruct.new(
+        id: sample_email_id,
         payload: OpenStruct.new(
           headers: [
             OpenStruct.new(name: "From", value: Faker::Internet.email),
@@ -25,6 +27,18 @@ RSpec.describe EmailProcessingService do
     context "when emails are processed successfully" do
       before do
         allow(Email).to receive(:insert_all)
+        allow(Email).to receive(:where).and_return(Email.none)
+      end
+
+      it "builds email records correctly" do
+        expect(service.send(:build_email_record, sample_email)).to include(
+          gmail_id: sample_email_id,
+          user_id: user.id,
+          sender: anything,
+          subject: anything,
+          email_date: anything,
+          email_datetime: anything
+        )
       end
 
       it "saves email records" do
@@ -35,6 +49,20 @@ RSpec.describe EmailProcessingService do
       it "returns success message" do
         result = service.process_and_save_emails([sample_email])
         expect(result).to eq({success: "Successfully saved all mail records"})
+      end
+    end
+
+    context "when there are duplicate emails" do
+      let(:existing_email) { create(:email, gmail_id: sample_email_id, user: user) }
+
+      before do
+        existing_email
+      end
+
+      it "does not re-save duplicate records" do
+        expect {
+          service.process_and_save_emails([sample_email, sample_email])
+        }.not_to change(Email, :count)
       end
     end
 
