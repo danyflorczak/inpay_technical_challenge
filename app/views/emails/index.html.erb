@@ -1,5 +1,6 @@
 <h1>Sync Emails before moving forward</h1>
-<%= link_to 'Sync Emails', sync_emails_emails_path %>
+<%= link_to 'Sync All Emails', sync_emails_emails_path %>
+<%= link_to 'Sync Emails by Date Range', sync_emails_with_date_range_emails_path %>
 
 <% if user_signed_in? %>
   <%= link_to 'Logout', destroy_user_session_path %>

@@ -25,4 +25,14 @@ class EmailsController < ApplicationController
       EmailSyncJob.perform_later(current_user)
     end
   end
+
+  def sync_emails_with_date_range
+  end
+
+  def perform_sync_with_date_range
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    EmailSyncJob.perform_later(current_user, start_date, end_date)
+    redirect_to sync_emails_emails_path
+  end
 end

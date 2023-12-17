@@ -11,9 +11,15 @@ class GmailAdapter
     @client = setup_gmail_client
   end
 
-  def list_user_messages(label_id, max_results, page_token)
+  def list_user_messages(label_id, max_results, page_token, query = nil)
     safe_api_call do
-      client.list_user_messages(user.email, label_ids: [label_id], max_results: max_results, page_token: page_token)
+      client.list_user_messages(
+        user.email,
+        label_ids: [label_id],
+        max_results: max_results,
+        page_token: page_token,
+        q: query
+      )
     end
   end
 
