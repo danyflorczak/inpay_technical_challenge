@@ -15,7 +15,9 @@
 
 [Here](docs/tutorials/README.md) you have access to a step-by-step tutorial that will guide you through the process of setting up this application locally.
 
-# Application Logic from User perespective
+## Application Logic from User perespective
+
+Brief explanation on how the app works from user pespective.
 
 ## Initial Access and Login
 - Upon opening the application at `localhost:3000`, you will be prompted to log in using Google. Note that this application exclusively supports Google authentication.
