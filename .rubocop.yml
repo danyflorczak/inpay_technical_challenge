@@ -15,3 +15,8 @@ AllCops:
     - db/schema.rb
     - vendor/bundle/**/*
 
+Lint/IneffectiveAccessModifier:
+  Enabled: true
+  Exclude:
+    - app/services/*
+
