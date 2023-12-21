@@ -80,7 +80,7 @@ class GmailAdapter
 
   def update_user_credentials
     authorization = client.authorization
-    user.update(
+    user.update!(
       token: authorization.access_token,
       refresh_token: authorization.refresh_token
     )
