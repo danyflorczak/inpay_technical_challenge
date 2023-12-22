@@ -5,7 +5,7 @@
 <%= link_to 'Email Stats', stats_emails_path %>
 <div>
   <% if user_signed_in? %>
-    <div><%= link_to 'Logout', destroy_user_session_path %></div>
+    <div><%= button_to "Logout", destroy_user_session_path, method: :delete %></div>
   <% end %>
 </div>
 
