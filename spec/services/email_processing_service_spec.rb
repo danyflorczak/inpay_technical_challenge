@@ -24,51 +24,42 @@ RSpec.describe EmailProcessingService do
       )
     end
 
-    context "when emails are processed successfully" do
-      before do
-        allow(Email).to receive(:insert_all)
-        allow(Email).to receive(:where).and_return(Email.none)
-      end
-
-      it "builds email records correctly" do
-        expect(service.send(:build_email_record, sample_email)).to include(
-          gmail_id: sample_email_id,
-          user_id: user.id,
-          sender: anything,
-          subject: anything,
-          email_date: anything,
-          email_datetime: anything
-        )
-      end
-
-      it "saves email records" do
-        service.process_and_save_emails([sample_email])
-        expect(Email).to have_received(:insert_all)
-      end
-
-      it "returns success message" do
-        result = service.process_and_save_emails([sample_email])
-        expect(result).to eq({success: "Successfully saved all mail records"})
-      end
+    let(:parsed_email) do
+      {
+        gmail_id: sample_email_id,
+        user_id: user.id,
+        sender: sample_email.payload.headers.find { |h| h.name == "From" }.value,
+        subject: sample_email.payload.headers.find { |h| h.name == "Subject" }.value,
+        email_date: anything,
+        email_datetime: anything
+      }
     end
 
-    context "when there are duplicate emails" do
-      let(:existing_email) { create(:email, gmail_id: sample_email_id, user: user) }
+    before do
+      allow(EmailParserService).to receive(:new).and_return(instance_double(EmailParserService, parse: parsed_email))
+      allow(Email).to receive(:upsert_all)
+    end
 
-      before do
-        existing_email
+    context "when emails are processed successfully" do
+      it "calls EmailParserService to parse emails" do
+        service.process_and_save_emails([sample_email])
+        expect(EmailParserService).to have_received(:new).with(sample_email, user).at_least(:once)
       end
 
-      it "does not re-save duplicate records" do
-        expect {
-          service.process_and_save_emails([sample_email, sample_email])
-        }.not_to change(Email, :count)
+      it "saves email records using upsert_all" do
+        service.process_and_save_emails([sample_email])
+        expect(Email).to have_received(:upsert_all).with([parsed_email], unique_by: :gmail_id)
+      end
+
+      it "returns a success response" do
+        result = service.process_and_save_emails([sample_email])
+        expect(result).to eq({success: true, message: "Successfully saved all mail records"})
       end
     end
 
     context "when there is an error saving emails" do
       before do
-        allow(Email).to receive(:insert_all).and_raise(ActiveRecord::RecordInvalid.new(Email.new))
+        allow(Email).to receive(:upsert_all).and_raise(ActiveRecord::RecordInvalid.new(Email.new))
       end
 
       it "logs an error" do
@@ -76,9 +67,9 @@ RSpec.describe EmailProcessingService do
         expect(logger).to have_received(:error).with(/Error in EmailProcessingService/)
       end
 
-      it "returns error message" do
+      it "returns an error response" do
         result = service.process_and_save_emails([sample_email])
-        expect(result).to eq({error: "Failed to save emails"})
+        expect(result).to eq({success: false, message: "Failed to save emails due to an invalid record"})
       end
     end
   end

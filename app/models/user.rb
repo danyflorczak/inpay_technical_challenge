@@ -3,13 +3,16 @@ class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
   def self.from_omniauth(access_token)
-    find_or_create_by(provider: access_token.provider, email:
-      access_token.info.email) do |user|
-      user.provider = access_token.provider
+    provider = access_token.provider
+    email = access_token.info.email
+    credentials = access_token.credentials
+
+    find_or_create_by!(provider: provider, email: email) do |user|
+      user.provider = provider
       user.uid = access_token.uid
-      user.email = access_token.info.email
-      user.token = access_token.credentials.token
-      user.refresh_token = access_token.credentials.refresh_token
+      user.email = email
+      user.token = credentials.token
+      user.refresh_token = credentials.refresh_token
       user.save!
     end
   end

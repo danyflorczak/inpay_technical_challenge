@@ -5,17 +5,17 @@ class EmailsController < ApplicationController
   end
 
   def dashboard
-    flash[:notice] = "Email sync was successful." if params[:synced]
+    flash[:notice] = t("email_sync.success") if params[:synced]
   end
 
   def count
-    @emails_count = params[:q] ? @q.result.count : nil
+    @emails_count = search_result&.count
   rescue => e
     handle_error(e, "counting emails")
   end
 
   def subjects
-    @subjects = params[:q] ? @q.result.pluck(:subject) : []
+    @subjects = search_result&.pluck(:subject) || []
   rescue => e
     handle_error(e, "retrieving subjects")
   end
@@ -29,20 +29,16 @@ class EmailsController < ApplicationController
   end
 
   def sync_emails
-    if user_signed_in?
-      begin
-        EmailSyncJob.perform_later(current_user)
-      rescue => e
-        handle_error(e, "syncing emails")
-      end
-    end
+    EmailSyncJob.perform_later(current_user.id)
+  rescue => e
+    handle_error(e, "syncing emails")
   end
 
   def sync_emails_with_date_range
   end
 
   def perform_sync_with_date_range
-    EmailSyncJob.perform_later(current_user, params[:start_date], params[:end_date])
+    EmailSyncJob.perform_later(current_user.id, params[:start_date], params[:end_date])
     redirect_to sync_emails_emails_path
   rescue => e
     handle_error(e, "syncing emails for date range")
@@ -57,5 +53,9 @@ class EmailsController < ApplicationController
   def handle_error(exception, action)
     flash[:error] = "Error #{action}: #{exception.message}"
     redirect_to dashboard_emails_path
+  end
+
+  def search_result
+    params[:q] && @q.result
   end
 end

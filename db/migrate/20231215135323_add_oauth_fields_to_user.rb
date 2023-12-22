@@ -1,8 +1,10 @@
 class AddOauthFieldsToUser < ActiveRecord::Migration[7.1]
   def change
-    add_column :users, :provider, :string
-    add_column :users, :uid, :string
-    add_column :users, :token, :string
-    add_column :users, :refresh_token, :string
+    change_table :users, bulk: true do |t|
+      t.string :provider
+      t.string :uid
+      t.string :token
+      t.string :refresh_token
+    end
   end
 end

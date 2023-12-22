@@ -1,0 +1,69 @@
+require: rubocop-rails
+
+Rails/Date:
+  Enabled: true
+  EnforcedStyle: strict
+  AllowToTime: false
+
+Rails/DefaultScope:
+  Enabled: true
+
+Rails/EnvironmentVariableAccess:
+  Enabled: true
+  Include:
+    - 'app/**/*.rb'
+    - 'lib/**/*.rb'
+  Exclude:
+    - 'lib/**/*.rake'
+  AllowReads: false
+  AllowWrites: false
+
+Rails/FilePath:
+  Enabled: true
+  EnforcedStyle: arguments
+
+Rails/FindBy:
+  Enabled: true
+  IgnoreWhereFirst: false
+  Include:
+    - 'app/models/**/*.rb'
+
+Rails/OrderById:
+  Enabled: true
+
+Rails/PluckId:
+  Enabled: true
+
+Rails/RenderPlainText:
+  Enabled: true
+  ContentTypeCompatibility: false
+
+Rails/RequestReferer:
+  Enabled: true
+  EnforcedStyle: referrer
+
+Rails/RequireDependency:
+  Enabled: true
+
+Rails/ReversibleMigrationMethodDefinition:
+  Enabled: true
+  Include:
+    - 'db/migrate/*.rb'
+
+Rails/SafeNavigation:
+  Enabled: true
+  ConvertTry: true
+
+Rails/TimeZone:
+  Enabled: true
+  EnforcedStyle: strict
+
+Rails/WhereExists:
+  Enabled: true
+  EnforcedStyle: where
+
+Rails/SkipsModelValidations:
+  Enabled: true
+  Exclude:
+    - app/services/email_processing_service.rb
+    
