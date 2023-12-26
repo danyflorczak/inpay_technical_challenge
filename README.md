@@ -10,6 +10,7 @@
 * [Tutorials](docs/tutorials/README.md) take you by the hand through a series of steps to run the app locally. Start here if you’re new to the project.
 * [Reference guides](docs/references/README.md) contain description of Classes from this application.
 
+To browse the documentation run `yard server` and open it in a [browser](//localhost:8808).
 
 ## Setup 
 
