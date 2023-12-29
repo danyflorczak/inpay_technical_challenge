@@ -41,6 +41,7 @@ gem "omniauth-rails_csrf_protection"
 gem "a9n"
 gem "google-api-client"
 gem "ransack"
+gem "concurrent-ruby"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[windows jruby]
