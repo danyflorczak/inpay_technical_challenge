@@ -478,6 +478,7 @@ DEPENDENCIES
   brakeman (~> 6.1)
   bullet (~> 7.0)
   bundler-audit (~> 0.9)
+  concurrent-ruby
   debug
   devise (~> 4.9, >= 4.9.3)
   factory_bot_rails (~> 6.4)
