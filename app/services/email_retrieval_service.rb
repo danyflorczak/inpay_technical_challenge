@@ -1,3 +1,6 @@
+require "date"
+require "concurrent-ruby"
+
 class EmailRetrievalService
   MAX_RESULTS = 500
   INBOX_LABEL = "INBOX"
@@ -16,32 +19,45 @@ class EmailRetrievalService
   attr_reader :gmail_adapter
 
   def collect_emails(query = nil)
-    emails = []
-    process_messages(INBOX_LABEL, query) do |message_info|
-      emails << message_info
+    emails = Concurrent::Array.new
+
+    threads = fetch_pages(query).map do |messages|
+      Thread.new do
+        process_messages(messages, emails)
+      end
     end
+
+    threads.each(&:join)
     emails
   end
 
-  def process_messages(label_id, query = nil)
+  def fetch_pages(query)
+    pages = []
     page_token = nil
+
     loop do
-      response = gmail_adapter.list_user_messages(label_id, MAX_RESULTS, page_token, query)
+      response = gmail_adapter.list_user_messages(INBOX_LABEL, MAX_RESULTS, page_token, query)
       break unless (messages = response.messages)&.any?
 
-      messages.each do |message|
-        yield gmail_adapter.get_user_message(message.id)
-      end
-
+      pages << messages
       page_token = response.next_page_token
       break unless page_token
+    end
+
+    pages
+  end
+
+  def process_messages(messages, emails)
+    messages.each do |message|
+      email = gmail_adapter.get_user_message(message.id)
+      emails << email if email
     end
   end
 
   def build_query(start_date, end_date)
     if start_date && end_date
       "after:#{self.class.parse_date(start_date).strftime("%Y/%m/%d")} " \
-      "before:#{self.class.parse_date(end_date).strftime("%Y/%m/%d")}"
+        "before:#{self.class.parse_date(end_date).strftime("%Y/%m/%d")}"
     end
   end
 
